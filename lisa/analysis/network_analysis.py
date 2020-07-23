@@ -17,7 +17,7 @@ logging.config.dictConfig(logging_config)
 log = logging.getLogger()
 
 
-with open(f'{lisa_path}/data/ipblacklist') as f:
+with open(f'{lisa_path}/data/storage/ipblacklist') as f:
     ipblacklist = []
     for line in f:
         iprange = line.rstrip('\n').split('-')

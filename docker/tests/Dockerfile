@@ -1,5 +1,19 @@
 FROM python:3.6-slim
 
+RUN printf '# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释\n\
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free\n\
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free\n\
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free\n\
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free\n\
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free\n\
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free\n\
+deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free\n\
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free\n\
+' > /etc/apt/sources.list
+ARG http_proxy
+ARG https_proxy
+
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
@@ -32,7 +46,7 @@ ENV PYTHONPATH /home/lisa
 WORKDIR /home/lisa
 
 RUN pip install -r requirements.txt \
-    && iprange -j data/blacklists/* > data/ipblacklist \
+    && iprange -j data/blacklists/* > data/storage/ipblacklist \
     && echo "Downloading MaxMind GeoLite databases ..." \
     && wget https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz -q -O - | tar xz -C data/geolite2databases \
     && wget https://geolite.maxmind.com/download/geoip/database/GeoLite2-ASN.tar.gz -q -O - | tar xz -C data/geolite2databases \

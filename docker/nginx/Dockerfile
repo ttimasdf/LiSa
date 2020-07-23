@@ -1,6 +1,9 @@
 FROM node:10-alpine as builder
 
 ARG webhost=localhost:4242
+ARG http_proxy
+ARG https_proxy
+
 
 WORKDIR /frontend
 

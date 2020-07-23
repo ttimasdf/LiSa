@@ -1,6 +1,7 @@
 #!/bin/sh
 
 if [ $# -eq 1 ]; then
+  mkdir -p data/geolite2databases
   echo "Setting up MaxMind databases."
   wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$1&suffix=tar.gz" -q -O - | tar xz -C data/geolite2databases
   wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&license_key=$1&suffix=tar.gz" -q -O - | tar xz -C data/geolite2databases

@@ -3,6 +3,8 @@
 echo "nameserver 8.8.8.8" | cat - /etc/resolv.conf > /tmp/resolv.conf && cat /tmp/resolv.conf > /etc/resolv.conf
 echo "precedence ::ffff:0:0/96  100" > /etc/gai.conf
 
+iprange -j data/blacklists/* > data/storage/ipblacklist
+
 if [ -n "${VPN}" ]; then
   echo "Connecting to VPN."
   openvpn --config "${VPN}/config.ovpn" --daemon
